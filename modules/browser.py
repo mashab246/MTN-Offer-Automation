@@ -32,7 +32,7 @@ from webdriver_manager.microsoft import EdgeChromiumDriverManager
 
 class Browser:
 
-    def _init_(self):
+    def __init__(self):
 
         # Downloads folder inside the project
         download_path = os.path.join(
