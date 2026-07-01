@@ -11,7 +11,7 @@ class Website:
 
     def accept_cookies(self):
 
-        time.sleep(3)
+        #time.sleep(3)
 
         button = WebDriverWait(self.driver, 30).until(
             EC.presence_of_element_located(
@@ -24,7 +24,7 @@ class Website:
             button
         )
 
-        time.sleep(1)
+        #time.sleep(1)
 
         self.driver.execute_script(
             "arguments[0].click();",
@@ -45,7 +45,7 @@ class Website:
 
     def click_proceed(self):
 
-        time.sleep(2)
+        #time.sleep(2)
 
         button = WebDriverWait(self.driver, 30).until(
             EC.presence_of_element_located(
@@ -58,7 +58,7 @@ class Website:
             button
         )
 
-        time.sleep(1)
+        #time.sleep(1)
 
         self.driver.execute_script(
             "arguments[0].click();",
@@ -70,6 +70,12 @@ class Website:
 
     def get_available_offers(self):
 
+        WebDriverWait(self.driver, 20).until(
+            EC.presence_of_element_located(
+                (By.CLASS_NAME, "_card-deal__title")
+            )
+        )
+
         offers = []
 
         cards = self.driver.find_elements(
@@ -78,7 +84,6 @@ class Website:
         )
 
         for card in cards:
-
             offer = card.text.strip()
 
             if offer:
@@ -99,8 +104,3 @@ class Website:
                 (By.ID, "kz_mtn_bundle_number")
             )
         )
-
-        try:
-            self.accept_cookies()
-        except:
-            pass

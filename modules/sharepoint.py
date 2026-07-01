@@ -26,13 +26,6 @@ class SharePoint:
         print("switched to excel frame")
         print("step 1: looking for file")
 
-        """print("Current URL:", self.driver.current_url)
-
-        iframes = self.driver.find_elements(By.TAG_NAME, "iframe")
-        print(f"found {len(iframes)} iframes")
-
-        for i, frame in enumerate(iframes):
-            print(i, frame.get_attribute("id"), frame.get_attribute("name"))"""
         # File
         file_btn = wait.until(
             EC.element_to_be_clickable(
@@ -47,68 +40,56 @@ class SharePoint:
 
         print("step 3: file clicked")
 
-        time.sleep(2)
+        #time.sleep(2)
 
-        print("Step 4: Looking for Create a Copy")
+        print("Step 4: Looking for Info")
 
-        create_copy = wait.until(
-            EC.presence_of_element_located(
-                (By.XPATH, "//*[normalize-space()='Create a Copy']")
+        info_btn = wait.until(
+            EC.element_to_be_clickable(
+                (By.XPATH, "//*[normalize-space()='Info']")
             )
         )
 
-        # Scroll into view
         self.driver.execute_script(
             "arguments[0].scrollIntoView({block:'center'});",
-            create_copy
+            info_btn
         )
 
-        time.sleep(1)
+        #time.sleep(1)
 
-        # JavaScript click
         self.driver.execute_script(
             "arguments[0].click();",
-            create_copy
+            info_btn
         )
 
-        print("Create a Copy clicked")
+        print("Info clicked")
 
         # Give the side panel time to open
-        time.sleep(3)
+        #time.sleep(3)
 
+        print("Step 5: Looking for Open in Desktop")
 
-        downloads = self.driver.find_elements(
-            By.XPATH,
-            "//*[contains(., 'Download a Copy')]"
-        )
-
-        print(f"Found {len(downloads)} Download a Copy elements")
-
-        for i, d in enumerate(downloads):
-            print(i, repr(d.text))
-
-
-        # Create a Copy
-        """create_copy = wait.until(
+        open_btn = wait.until(
             EC.element_to_be_clickable(
-                (By.XPATH, "//*[normalize-space()='Create a Copy')]")
+                (By.XPATH, "//*[normalize-space()='Open in Desktop']")
             )
         )
 
-        self.driver.excute_script("arguments[0].click();", create_copy)
-
-        print("Create a copy clicked")"""
-
-        """create_copy = WebDriverWait(self.driver, 20).until(
-            EC.element_to_be_clickable((
-                By.XPATH,
-                "//div[@data-unique-id='FileMenuCreateCopySection']"
-            ))
+        self.driver.execute_script(
+            "arguments[0].scrollIntoView({block:'center'});",
+            open_btn
         )
 
-        create_copy.click()"""
+        #time.sleep(1)
 
-        time.sleep(2)
+        self.driver.execute_script(
+            "arguments[0].click();",
+            open_btn
+        )
+
+        print("Open in Desktop clicked")
+
+        #time.sleep(2)
 
         # Download a Copy
         """wait.until(

@@ -1,7 +1,7 @@
 import time
 from modules.browser import Browser
 from modules.website import Website
-from modules.excel_handler import ExcelHandler
+from modules.excel_handler2 import ExcelHandler
 from modules.bundle_mapping import OFFER_MAPPING, EXCEL_COLUMNS
 from modules.sharepoint import SharePoint
 
@@ -9,9 +9,24 @@ from modules.sharepoint import SharePoint
 DATA_URL = "https://www.mtn.co.ug/deal-types/daily-data-bundles/"
 VOICE_URL = "https://www.mtn.co.ug/deal-types/daily-voice-bundles/"
 
-downloaded_file = SharePoint.wait_for_download(Browser.download_Path)
+# ----------------------------
+# Download latest SharePoint workbook
+# ----------------------------
 
-excel = ExcelHandler(downloaded_file)
+SHAREPOINT_URL = "https://airtelaf-my.sharepoint.com/:x:/g/personal/13400403_airtel_africa/IQAnROVW_apXSJ2A0axNmhZiAcmSDh1qT8AUatkIzirW66Y?e=eJOza1&isSPOFile=1&ovuser=16c73727-979c-4d82-b3a7-eb6a2fddfe57%2C23245518%40airtel.africa&wdExp=TEAMS-TREATMENT&web=1&TeamsCID=2c21f2f2-9c46-49d3-b7a8-f0af79d561a1&clickparams=eyJBcHBOYW1lIjoiVGVhbXMtRGVza3RvcCIsIkFwcFZlcnNpb24iOiI0OS8yNjA1MjkwNjEyMSJ9&linkOpenTime=1782796862307"
+
+browser = Browser()
+
+sharepoint = SharePoint(browser.driver)
+
+sharepoint.open_workbook(SHAREPOINT_URL)
+
+
+sharepoint.download_copy()
+
+time.sleep(10)
+
+excel = ExcelHandler("Offer Check from Website_Musa.xlsx")
 
 numbers = excel.get_phone_numbers()
 
@@ -35,7 +50,7 @@ browser.open(DATA_URL)
 
 website.accept_cookies()
 
-time.sleep(2)
+#time.sleep(2)
 
 for row, phone in numbers:
 
@@ -45,7 +60,7 @@ for row, phone in numbers:
 
     website.click_proceed()
 
-    time.sleep(3)
+    #time.sleep(3)
 
     data_offers = website.get_available_offers()
 
@@ -60,7 +75,7 @@ for row, phone in numbers:
     }
 
     website.reset_page(DATA_URL)
-    time.sleep(2)
+    #time.sleep(2)
 
 
 print("\n==============================")
@@ -71,7 +86,7 @@ browser.open(VOICE_URL)
 
 website.accept_cookies()
 
-time.sleep(2)
+#time.sleep(2)
 
 for row, phone in numbers:
 
@@ -81,7 +96,7 @@ for row, phone in numbers:
 
     website.click_proceed()
 
-    time.sleep(3)
+    #time.sleep(3)
 
     voice_offers = website.get_available_offers()
 
@@ -91,7 +106,7 @@ for row, phone in numbers:
 
     website.reset_page(VOICE_URL)
 
-    time.sleep(2)
+    #time.sleep(2)
 
 
 print("\n==============================")
@@ -106,15 +121,6 @@ for phone, info in results.items():
 
     print(f"\nWriting offers for {phone}")
 
-    """for offer in all_offers:
-
-        if offer in OFFER_COLUMNS:
-
-            excel.write_offer(
-                row,
-                OFFER_COLUMNS[offer],
-                1
-            )"""
     
     for offer in all_offers:
 
